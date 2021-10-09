@@ -48,7 +48,7 @@
 
 
 
-
+<link rel="dns-prefetch" href="https://comment-api-gldmsa2ru-yiazzz.vercel.app/">
   <noscript>
     <link rel="stylesheet" href="/css/noscript.css">
   </noscript>
@@ -292,6 +292,20 @@
     </span>
 
   
+  
+  <span class="post-meta-item">
+    
+    <span class="post-meta-item-icon">
+      <i class="far fa-comment"></i>
+    </span>
+    <span class="post-meta-item-text">Waline：</span>
+  
+    <a title="waline" href="/2021/10/08/%E5%85%B3%E4%BA%8E%E5%BE%B7%E5%BD%AA%EF%BC%8C%E6%88%91%E7%9F%A5%E9%81%93%E7%9A%84%E4%B8%8D%E5%A4%9A/#waline-comments" itemprop="discussionUrl">
+      <span class="post-comments-count waline-comment-count" id="/2021/10/08/%E5%85%B3%E4%BA%8E%E5%BE%B7%E5%BD%AA%EF%BC%8C%E6%88%91%E7%9F%A5%E9%81%93%E7%9A%84%E4%B8%8D%E5%A4%9A/" data-xid="/2021/10/08/%E5%85%B3%E4%BA%8E%E5%BE%B7%E5%BD%AA%EF%BC%8C%E6%88%91%E7%9F%A5%E9%81%93%E7%9A%84%E4%B8%8D%E5%A4%9A/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
     <span id="/2021/10/08/%E5%85%B3%E4%BA%8E%E5%BE%B7%E5%BD%AA%EF%BC%8C%E6%88%91%E7%9F%A5%E9%81%93%E7%9A%84%E4%B8%8D%E5%A4%9A/" class="post-meta-item leancloud_visitors" data-flag-title="关于德彪，我知道的不多。" title="阅读次数">
       <span class="post-meta-item-icon">
         <i class="far fa-eye"></i>
@@ -299,13 +313,7 @@
       <span class="post-meta-item-text">阅读次数：</span>
       <span class="leancloud-visitors-count"></span>
     </span>
-    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
-      <span class="post-meta-item-icon">
-        <i class="far fa-eye"></i>
-      </span>
-      <span class="post-meta-item-text">阅读次数：</span>
-      <span id="busuanzi_value_page_pv"></span>
-    </span>
+  
 </div>
 
             <div class="post-description">人类迄今为止，只有两部文艺作品说透了人对自身局限性的焦虑以及对这种焦虑的突破。<br> 一部是《浮士德》，另一部是《马大帅》 。</div>
@@ -376,6 +384,7 @@
 
 
 
+    <div class="comments" id="waline-comments"></div>
 </div>
   </main>
 
@@ -390,24 +399,6 @@
     <i class="fa fa-heart"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">Yiazzz~</span>
-</div>
-<div class="busuanzi-count">
-    <span class="post-meta-item" id="busuanzi_container_site_uv">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-user"></i>
-      </span>
-      <span class="site-uv" title="总访客量">
-        <span id="busuanzi_value_site_uv"></span>
-      </span>
-    </span>
-    <span class="post-meta-item" id="busuanzi_container_site_pv">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-eye"></i>
-      </span>
-      <span class="site-pv" title="总访问量">
-        <span id="busuanzi_value_site_pv"></span>
-      </span>
-    </span>
 </div>
   <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
   </div>
@@ -430,13 +421,19 @@
 
 
   
-  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-
-
-  <script class="next-config" data-name="leancloud_visitors" type="application/json">{"enable":true,"app_id":null,"app_key":null,"server_url":null,"security":true}</script>
-  <script src="/js/third-party/statistics/lean-analytics.js"></script>
 
 
 
+
+<script class="next-config" data-name="waline" type="application/json">{"lang":"zh-cn","enable":true,"serverURL":"https://comment-api-gldmsa2ru-yiazzz.vercel.app/","placeholder":"(发表评论)","avatar":"mm","pageSize":10,"visitor":true,"comment_count":true,"requiredFields":["nick"],"meta":["nick","mail","link"],"libUrl":"https://cdn.jsdelivr.net/npm/@waline/client/dist/Waline.min.js","el":"#waline-comments","path":"/2021/10/08/%E5%85%B3%E4%BA%8E%E5%BE%B7%E5%BD%AA%EF%BC%8C%E6%88%91%E7%9F%A5%E9%81%93%E7%9A%84%E4%B8%8D%E5%A4%9A/"}</script>
+<script>
+document.addEventListener('page:loaded', () => {
+  NexT.utils.loadComments(CONFIG.waline.el).then(() => 
+    NexT.utils.getScript(CONFIG.waline.libUrl, { condition: window.Waline })
+  ).then(() => {
+    new Waline(CONFIG.waline);
+  });
+});
+</script>
 </body>
 </html>
