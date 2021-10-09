@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://yiazzz.github.io/p/4a17b4566.html</loc>
+    
+    <lastmod>2021-10-09</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://yiazzz.github.io/p/4a17b156.html</loc>
     
     <lastmod>2021-10-09</lastmod>
@@ -88,14 +95,14 @@
   </url>
   
   <url>
-    <loc>https://yiazzz.github.io/tags/%E9%9F%A9%E5%AF%92%E9%A3%8E%E6%A0%BC/</loc>
+    <loc>https://yiazzz.github.io/tags/%E5%AD%A6%E4%B9%A0/</loc>
     <lastmod>2021-10-09</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>https://yiazzz.github.io/tags/%E5%B0%8F%E5%BC%A0%E5%92%8C%E5%B0%8F%E4%B8%BD/</loc>
+    <loc>https://yiazzz.github.io/tags/%E9%9F%A9%E5%AF%92%E9%A3%8E%E6%A0%BC/</loc>
     <lastmod>2021-10-09</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -108,10 +115,24 @@
     <priority>0.6</priority>
   </url>
   
+  <url>
+    <loc>https://yiazzz.github.io/tags/%E5%B0%8F%E5%BC%A0%E5%92%8C%E5%B0%8F%E4%B8%BD/</loc>
+    <lastmod>2021-10-09</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
 
   
   <url>
     <loc>https://yiazzz.github.io/categories/%E6%9D%82%E6%96%87/</loc>
+    <lastmod>2021-10-09</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://yiazzz.github.io/categories/%E8%AE%B0%E5%BD%95/</loc>
     <lastmod>2021-10-09</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
