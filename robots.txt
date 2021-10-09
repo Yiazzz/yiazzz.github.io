@@ -1,16 +1,14 @@
 User-agent: *
-Allow: /
-Allow: /home/
-Allow: /about/
-Allow: /archives/
-Allow: /categories/
-Allow: /tags/
 Disallow: /js/
 Disallow: /css/
 Disallow: /fonts/
 Disallow: /vendors/
 Disallow: /fancybox/
 Disallow: /categories/
-
-Sitemap: http://rogn.top/sitemap.xml
-Sitemap: http://rogn.top/baidusitemap.xml
+Allow: /
+Allow: /home/
+Allow: /about/
+Allow: /archives/
+Allow: /categories/
+Allow: /tags/
+Sitemap: https://yiazzz.github.io/sitemap.xml,https://yiazzz.github.io/baidusitemap.xml
