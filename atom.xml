@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>那还是叫泡泡吧</title>
+  <icon>https://yiazzz.github.io/icon.png</icon>
+  <subtitle>岁月既往&amp;不可复追</subtitle>
+  <link href="https://yiazzz.github.io/atom.xml" rel="self"/>
+  
+  <link href="https://yiazzz.github.io/"/>
+  <updated>2021-10-08T16:36:53.030Z</updated>
+  <id>https://yiazzz.github.io/</id>
+  
+  <author>
+    <name>Yiazzz~</name>
+    
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>小张和小丽。</title>
+    <link href="https://yiazzz.github.io/2021/10/08/%E5%B0%8F%E5%BC%A0%E5%92%8C%E5%B0%8F%E4%B8%BD/"/>
+    <id>https://yiazzz.github.io/2021/10/08/%E5%B0%8F%E5%BC%A0%E5%92%8C%E5%B0%8F%E4%B8%BD/</id>
+    <published>2021-10-08T15:52:00.000Z</published>
+    <updated>2021-10-08T16:36:53.030Z</updated>
+    
+    
+    <summary type="html">小张曾经又是谁的小丽呢，曾经的小丽又变成谁的小张了呢&lt;br&gt; 又或许小张和小丽，又是同一个人 。</summary>
+    
+    
+    
+    <category term="杂文" scheme="https://yiazzz.github.io/categories/%E6%9D%82%E6%96%87/"/>
+    
+    
+    <category term="互联网博物馆" scheme="https://yiazzz.github.io/tags/%E4%BA%92%E8%81%94%E7%BD%91%E5%8D%9A%E7%89%A9%E9%A6%86/"/>
+    
+    <category term="小张和小丽" scheme="https://yiazzz.github.io/tags/%E5%B0%8F%E5%BC%A0%E5%92%8C%E5%B0%8F%E4%B8%BD/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>长岛的雪</title>
+    <link href="https://yiazzz.github.io/2021/10/08/%E9%95%BF%E5%B2%9B%E7%9A%84%E9%9B%AA/"/>
+    <id>https://yiazzz.github.io/2021/10/08/%E9%95%BF%E5%B2%9B%E7%9A%84%E9%9B%AA/</id>
+    <published>2021-10-08T15:41:00.000Z</published>
+    <updated>2021-10-08T15:46:55.790Z</updated>
+    
+    
+    <summary type="html">他依然向往着长岛的雪，依然向往着潘帕斯的风吟鸟唱。 &lt;br&gt; 很久以后，我才知道，原来，长岛是没有雪的 。</summary>
+    
+    
+    
+    <category term="杂文" scheme="https://yiazzz.github.io/categories/%E6%9D%82%E6%96%87/"/>
+    
+    
+    <category term="互联网博物馆" scheme="https://yiazzz.github.io/tags/%E4%BA%92%E8%81%94%E7%BD%91%E5%8D%9A%E7%89%A9%E9%A6%86/"/>
+    
+    <category term="长岛的雪" scheme="https://yiazzz.github.io/tags/%E9%95%BF%E5%B2%9B%E7%9A%84%E9%9B%AA/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>关于德彪，我知道的不多。</title>
+    <link href="https://yiazzz.github.io/2021/10/08/%E5%85%B3%E4%BA%8E%E5%BE%B7%E5%BD%AA%EF%BC%8C%E6%88%91%E7%9F%A5%E9%81%93%E7%9A%84%E4%B8%8D%E5%A4%9A/"/>
+    <id>https://yiazzz.github.io/2021/10/08/%E5%85%B3%E4%BA%8E%E5%BE%B7%E5%BD%AA%EF%BC%8C%E6%88%91%E7%9F%A5%E9%81%93%E7%9A%84%E4%B8%8D%E5%A4%9A/</id>
+    <published>2021-10-08T15:12:00.000Z</published>
+    <updated>2021-10-08T16:35:31.248Z</updated>
+    
+    
+    <summary type="html">人类迄今为止，只有两部文艺作品说透了人对自身局限性的焦虑以及对这种焦虑的突破。&lt;br&gt; 一部是《浮士德》，另一部是《马大帅》 。</summary>
+    
+    
+    
+    <category term="杂文" scheme="https://yiazzz.github.io/categories/%E6%9D%82%E6%96%87/"/>
+    
+    
+    <category term="互联网博物馆" scheme="https://yiazzz.github.io/tags/%E4%BA%92%E8%81%94%E7%BD%91%E5%8D%9A%E7%89%A9%E9%A6%86/"/>
+    
+    <category term="范德彪" scheme="https://yiazzz.github.io/tags/%E8%8C%83%E5%BE%B7%E5%BD%AA/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Hello World</title>
+    <link href="https://yiazzz.github.io/2021/10/08/hello-world/"/>
+    <id>https://yiazzz.github.io/2021/10/08/hello-world/</id>
+    <published>2021-10-08T03:01:15.608Z</published>
+    <updated>2021-10-08T15:12:34.731Z</updated>
+    
+    
+    <summary type="html">测试，这是文章的简介！</summary>
+    
+    
+    
+    <category term="杂文" scheme="https://yiazzz.github.io/categories/%E6%9D%82%E6%96%87/"/>
+    
+    
+    <category term="人生" scheme="https://yiazzz.github.io/tags/%E4%BA%BA%E7%94%9F/"/>
+    
+  </entry>
+  
+</feed>
