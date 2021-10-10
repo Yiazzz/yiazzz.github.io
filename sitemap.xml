@@ -2,16 +2,37 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://yiazzz.github.io/p/4a17b4566.html</loc>
+    <loc>https://yiazzz.github.io/shuoshuo/index.html</loc>
     
-    <lastmod>2021-10-09</lastmod>
+    <lastmod>2021-10-10</lastmod>
     
   </url>
   
   <url>
-    <loc>https://yiazzz.github.io/p/4a17b156.html</loc>
+    <loc>https://yiazzz.github.io/about/index.html</loc>
     
-    <lastmod>2021-10-09</lastmod>
+    <lastmod>2021-10-10</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://yiazzz.github.io/categories/index.html</loc>
+    
+    <lastmod>2021-10-10</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://yiazzz.github.io/tags/index.html</loc>
+    
+    <lastmod>2021-10-10</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://yiazzz.github.io/p/11c4f0d2.html</loc>
+    
+    <lastmod>2021-10-10</lastmod>
     
   </url>
   
@@ -30,37 +51,9 @@
   </url>
   
   <url>
-    <loc>https://yiazzz.github.io/p/11c4f0d2.html</loc>
-    
-    <lastmod>2021-10-09</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://yiazzz.github.io/p/80a082e3.html</loc>
     
     <lastmod>2021-10-09</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://yiazzz.github.io/about/index.html</loc>
-    
-    <lastmod>2021-10-08</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://yiazzz.github.io/tags/index.html</loc>
-    
-    <lastmod>2021-10-08</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://yiazzz.github.io/categories/index.html</loc>
-    
-    <lastmod>2021-10-08</lastmod>
     
   </url>
   
@@ -72,13 +65,6 @@
     <priority>1.0</priority>
   </url>
 
-  
-  <url>
-    <loc>https://yiazzz.github.io/tags/%E4%BA%BA%E7%94%9F/</loc>
-    <lastmod>2021-10-10</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
   
   <url>
     <loc>https://yiazzz.github.io/tags/%E4%BA%92%E8%81%94%E7%BD%91%E5%8D%9A%E7%89%A9%E9%A6%86/</loc>
@@ -95,21 +81,7 @@
   </url>
   
   <url>
-    <loc>https://yiazzz.github.io/tags/%E5%AD%A6%E4%B9%A0/</loc>
-    <lastmod>2021-10-10</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://yiazzz.github.io/tags/%E9%9F%A9%E5%AF%92%E9%A3%8E%E6%A0%BC/</loc>
-    <lastmod>2021-10-10</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://yiazzz.github.io/tags/%E5%B0%8F%E5%BC%A0%E5%92%8C%E5%B0%8F%E4%B8%BD/</loc>
     <lastmod>2021-10-10</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -122,7 +94,21 @@
     <priority>0.6</priority>
   </url>
   
+  <url>
+    <loc>https://yiazzz.github.io/tags/%E5%B0%8F%E5%BC%A0%E5%92%8C%E5%B0%8F%E4%B8%BD/</loc>
+    <lastmod>2021-10-10</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
 
+  
+  <url>
+    <loc>https://yiazzz.github.io/categories/%E8%AE%B0%E5%BD%95/</loc>
+    <lastmod>2021-10-10</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
   
   <url>
     <loc>https://yiazzz.github.io/categories/%E6%9D%82%E6%96%87/</loc>
@@ -132,7 +118,7 @@
   </url>
   
   <url>
-    <loc>https://yiazzz.github.io/categories/%E8%AE%B0%E5%BD%95/</loc>
+    <loc>https://yiazzz.github.io/categories/%E4%B8%93%E6%A0%8F/</loc>
     <lastmod>2021-10-10</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
