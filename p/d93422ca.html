@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/master.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/master.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/master.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="google-site-verification" content="sxReHOlLmtU4Lpyhf5f86lLtc0futYjLqVYK574gDdk">
+  <meta name="baidu-site-verification" content="code-UE2pBLpmLq">
+
+  <meta name="sogou_site_verification" content="KuzUcCh0H1"/>
+
+
+  <meta name="360-site-verification" content="63b78e1ba5d952040032605048572ed3"/>
+
+
+  <meta name="shenma-site-verification" content="59760e053a26f2be138e9157278541fd_1633834784"/>
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yiazzz.github.io","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":true,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"disqus","storage":null,"lazyload":false},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true}}</script><script src="/js/config.js"></script>
+
+<meta name="description" content="Service Locator Pattern，学习spring，遇到了的设计模式 。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="设计模式のService Locator Pattern">
+<meta property="og:url" content="https://yiazzz.github.io/p/d93422ca.html">
+<meta property="og:site_name" content="那还是叫泡泡吧">
+<meta property="og:description" content="Service Locator Pattern，学习spring，遇到了的设计模式 。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://blog-1307734415.cos.ap-nanjing.myqcloud.com/blog/images/ServiceLocator.jpg">
+<meta property="og:image" content="https://blog-1307734415.cos.ap-nanjing.myqcloud.com/blog/images/serviceLocatorPattern.jpg">
+<meta property="article:published_time" content="2021-11-01T02:12:00.000Z">
+<meta property="article:modified_time" content="2021-11-01T02:20:52.264Z">
+<meta property="article:author" content="安">
+<meta property="article:tag" content="Service Locator Pattern">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blog-1307734415.cos.ap-nanjing.myqcloud.com/blog/images/ServiceLocator.jpg">
+
+
+<link rel="canonical" href="https://yiazzz.github.io/p/d93422ca.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://yiazzz.github.io/p/d93422ca.html","path":"p/d93422ca.html","title":"设计模式のService Locator Pattern"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>设计模式のService Locator Pattern | 那还是叫泡泡吧</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?76bc7ee3c4bf212e74c1bb9f5742366b"></script>
+
+
+<link rel="dns-prefetch" href="https://comment-api-ruddy.vercel.app/">
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+
+	<!--pjax：防止跳转页面音乐暂停-->
+	<script src="https://cdn.jsdelivr.net/npm/pjax@0.2.8/pjax.js"></script> 
+
+
+<link rel="alternate" href="/atom.xml" title="那还是叫泡泡吧" type="application/atom+xml">
+<style>.darkmode--activated{--body-bg-color:#282828;--content-bg-color:#333;--card-bg-color:#555;--text-color:#ccc;--blockquote-color:#bbb;--link-color:#ccc;--link-hover-color:#eee;--brand-color:#ddd;--brand-hover-color:#ddd;--table-row-odd-bg-color:#282828;--table-row-hover-bg-color:#363636;--menu-item-bg-color:#555;--btn-default-bg:#222;--btn-default-color:#ccc;--btn-default-border-color:#555;--btn-default-hover-bg:#666;--btn-default-hover-color:#ccc;--btn-default-hover-border-color:#666;--highlight-background:#282b2e;--highlight-foreground:#a9b7c6;--highlight-gutter-background:#34393d;--highlight-gutter-foreground:#9ca9b6}.darkmode--activated img{opacity:.75}.darkmode--activated img:hover{opacity:.9}.darkmode--activated code{color:#69dbdc;background:0 0}button.darkmode-toggle{z-index:9999}</style></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">那还是叫泡泡吧</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">岁月既往 & 不可复追</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>泡泡の故事</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-shuoshuo"><a href="https://yiazzz.github.io/shuoshuo/" rel="section"><i class="fa fa-book fa-fw"></i>泡泡の动态</a></li>
+        <li class="menu-item menu-item-guestbook"><a href="/guestbook/" rel="section"><i class="fa fa-comments fa-fw"></i>留言板</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+        <li class="menu-item menu-item-sitemap"><a href="/sitemap.xml" rel="section"><i class="fa fa-sitemap fa-fw"></i>站点地图</a></li>
+        <li class="menu-item menu-item-commonweal"><a href="https://yiazzz.github.io/404" rel="section"><i class="fa fa-heartbeat fa-fw"></i>迷失の404</a></li>
+        <li class="menu-item menu-item-commentadmin"><a href="https://comment-api-w1q2ok0lr-yiazzz.vercel.app/ui#" rel="noopener" target="_blank"><i class="fa fa-comment fa-fw"></i>留言管理</a></li>
+        <li class="menu-item menu-item-top"><a href="/top/" rel="section"><i class="fa fa-signal fa-fw"></i>阅读排行</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+
+<!-- recent posts -->
+    <div class="links-of-blogroll motion-element links-of-blogroll-block">
+        <div class="links-of-blogroll-title recent-posts-title">
+	    <i class="fa fa-history " aria-hidden="true"></i>
+           <font size= '3' color='@orange'> 最近更新</font>
+	</div>
+	<ul class="links-of-blogroll-list recent-posts-list">
+	        <li class="my-links-of-blogroll-item">
+		    <a href="/p/1255621.html" title="谁陪你去浪迹天涯..." target="">
+		    <font size= '2'>谁陪你去浪迹天涯...</font>
+		    </a>
+		</li>
+	        <li class="my-links-of-blogroll-item">
+		    <a href="/p/11c4f0d2.html" title="小张和小丽。" target="">
+		    <font size= '2'>小张和小丽。</font>
+		    </a>
+		</li>
+	        <li class="my-links-of-blogroll-item">
+		    <a href="/p/80a082e3.html" title="长岛的雪" target="">
+		    <font size= '2'>长岛的雪</font>
+		    </a>
+		</li>
+	        <li class="my-links-of-blogroll-item">
+		    <a href="/p/d9aee2ca.html" title="关于德彪，我知道的不多。" target="">
+		    <font size= '2'>关于德彪，我知道的不多。</font>
+		    </a>
+		</li>
+	</ul>
+    </div>
+
+
+<hr>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#service-Locator"><span class="nav-number">1.</span> <span class="nav-text">service Locator</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#InitialContext"><span class="nav-number">2.</span> <span class="nav-text">InitialContext</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ServiceFactory"><span class="nav-number">3.</span> <span class="nav-text">ServiceFactory</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BusinessService"><span class="nav-number">4.</span> <span class="nav-text">BusinessService</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%BE%E4%BE%8B"><span class="nav-number">5.</span> <span class="nav-text">图例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#java-code-demo"><span class="nav-number">6.</span> <span class="nav-text">java code demo</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E6%8E%A5%E5%8F%A3"><span class="nav-number">6.1.</span> <span class="nav-text">服务接口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E6%8F%90%E4%BE%9B%E5%95%86%E7%B1%BB"><span class="nav-number">6.2.</span> <span class="nav-text">服务提供商类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%B9%E5%99%A8%E7%B1%BB"><span class="nav-number">6.3.</span> <span class="nav-text">容器类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%93%E5%AD%98%E7%B1%BB"><span class="nav-number">6.4.</span> <span class="nav-text">缓存类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ServiceLocator-%E7%B1%BB"><span class="nav-number">6.5.</span> <span class="nav-text">ServiceLocator 类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95%E7%B1%BB"><span class="nav-number">6.6.</span> <span class="nav-text">测试类</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BC%98%E7%82%B9"><span class="nav-number">7.</span> <span class="nav-text">优点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%BA%E7%82%B9"><span class="nav-number">8.</span> <span class="nav-text">缺点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">9.</span> <span class="nav-text">总结</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="安"
+      src="/uploads/master.gif">
+  <p class="site-author-name" itemprop="name">安</p>
+  <div class="site-description" itemprop="description">你离开以后，从此没人和我说话</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">4</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="/atom.xml" title="RSS → &#x2F;atom.xml"><i class="fa fa-rss fa-fw"></i>RSS</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+       <!--音乐插件-->
+	  <!-- require APlayer -->
+	    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.css">
+	    <script src="https://cdn.jsdelivr.net/npm/aplayer@1.10.1/dist/APlayer.min.js"></script>
+	    <!-- require MetingJS-->
+	    <script src="https://cdn.jsdelivr.net/npm/meting@2.0.1/dist/Meting.min.js"></script> 
+	    <!--网易云-->   
+	    <meting-js
+	      server="netease"
+	      id="5179108577"
+		  type="playlist" 
+		  mini="false"
+	      fixed="false"
+	      list-folded="false"
+	      autoplay="false"
+	      volume="0.3"
+	      theme="#FADFA3"
+	      order="random"
+		  loop="all"
+	      preload="auto"
+	      mutex="true">
+	    </meting-js>
+       <!--音乐插件-->
+
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://yiazzz.github.io/p/d93422ca.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/uploads/master.gif">
+      <meta itemprop="name" content="安">
+      <meta itemprop="description" content="你离开以后，从此没人和我说话">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="那还是叫泡泡吧">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          设计模式のService Locator Pattern
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+
+	
+
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2021-11-01 10:12:00 / 修改时间：10:20:52" itemprop="dateCreated datePublished" datetime="2021-11-01T10:12:00+08:00">2021-11-01</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E4%B8%93%E6%A0%8F/" itemprop="url" rel="index"><span itemprop="name">专栏</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E4%B8%93%E6%A0%8F/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" itemprop="url" rel="index"><span itemprop="name">设计模式</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+    <span class="post-meta-item-icon">
+      <i class="far fa-comment"></i>
+    </span>
+    <span class="post-meta-item-text">Waline：</span>
+  
+    <a title="waline" href="/p/d93422ca.html#waline-comments" itemprop="discussionUrl">
+      <span class="post-comments-count waline-comment-count" id="/p/d93422ca.html" data-xid="/p/d93422ca.html" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <span id="/p/d93422ca.html" class="post-meta-item leancloud_visitors" data-flag-title="设计模式のService Locator Pattern" title="阅读次数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span class="leancloud-visitors-count"></span>
+    </span>
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>4.1k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>4 分钟</span>
+    </span>
+</div>
+
+            <div class="post-description">Service Locator Pattern，学习spring，遇到了的设计模式 。</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <blockquote class="blockquote-center">
+<p>Service Locator Pattern，学习spring，遇到了的设计模式 。<br><br>                                <a target="_blank" rel="noopener" href="https://www.geeksforgeeks.org/service-locator-pattern">geeksforgeeks的原文</a></p>
+
+</blockquote>
+
+<p>用 抽象层 封装 获取服务 的过程。</p>
+<p>使用一个被称为 <code>service locator</code>的中心注册表，<code>service locator</code> 根据请求返回执行具体任务所需要的的信息。</p>
+<p>当服务消费者请求服务实例时，<code>serviceLocator</code>负责返回对应的服务实例。</p>
+<hr>
+<h2 id="service-Locator"><a href="#service-Locator" class="headerlink" title="service Locator"></a><strong>service Locator</strong></h2><p><code>service locator</code> 将 查找服务的<code>API</code>、服务提供者依赖、查找的复杂性以及业务对象的创建做了抽象，仅对服务消费者暴露一个简单的接口，这样将复杂封装在自己内部，使得客户端变的简单。</p>
+<hr>
+<h2 id="InitialContext"><a href="#InitialContext" class="headerlink" title="InitialContext"></a><strong>InitialContext</strong></h2><p>初始化上下文，类似于 <code>spring</code>里面的容器概念。如果对容器的概念也不清楚，那就只可意会不可言传了。</p>
+<p>是整个服务查找和创建过程的起点。将所有的服务提供商放进这个容器里面，如果，后续有新的服务提供商加入进来，也需要将它们放进这个<code>InitialContext</code>容器来。</p>
+<p><code>InitialContext</code> 根据具体的业务对象类型返回具体服务对象。</p>
+<hr>
+<h2 id="ServiceFactory"><a href="#ServiceFactory" class="headerlink" title="ServiceFactory"></a><strong>ServiceFactory</strong></h2><p>服务工厂对象负责管理 业务服务对象 的生命周期，何时实例化，何时销毁等。</p>
+<hr>
+<h2 id="BusinessService"><a href="#BusinessService" class="headerlink" title="BusinessService"></a><strong>BusinessService</strong></h2><p>业务服务对象，是一个角色，由客户端需求的服务对象来扮演。所以说，就是具体的服务提供商对象。</p>
+<p>业务服务对象 由 服务工厂创建、查找、删除</p>
+<hr>
+<h2 id="图例"><a href="#图例" class="headerlink" title="图例"></a>图例</h2><p><img src="https://blog-1307734415.cos.ap-nanjing.myqcloud.com/blog/images/ServiceLocator.jpg" alt="img"></p>
+<p>以前的类关系</p>
+<blockquote>
+<p>服务消费者和服务提供商，绑定在一起，增加或删除服务提供商，都需要更改服务消费者中的代码。</p>
+</blockquote>
+<blockquote>
+<p>在编译的时候，具体的服务提供商的类就需要存在。</p>
+</blockquote>
+<hr>
+<p><img src="https://blog-1307734415.cos.ap-nanjing.myqcloud.com/blog/images/serviceLocatorPattern.jpg" alt="img"></p>
+<p><code>Service Locator Pattern</code> 模式的类关系</p>
+<blockquote>
+<p>服务提供商和服务消费者之间的耦合，转移到 <code>locator</code> 里面</p>
+</blockquote>
+<blockquote>
+<p>在编译的时候，具体的服务提供商的类不需要存在。增加或修改服务提供商，服务消费者也不需要改代码。</p>
+</blockquote>
+<hr>
+<h2 id="java-code-demo"><a href="#java-code-demo" class="headerlink" title="java code demo"></a>java code demo</h2><h3 id="服务接口"><a href="#服务接口" class="headerlink" title="服务接口"></a>服务接口</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* 首先将 服务 的功能，抽取出来。</span></span><br><span class="line"><span class="comment">* 这个抽取很有意义，在后面这个接口将代替具体的服务提供商，参与到逻辑中。</span></span><br><span class="line"><span class="comment">* 将具体的服务提供商，排除在外，这样整体逻辑，将和具体的服务提供商无关。</span></span><br><span class="line"><span class="comment">* 也就是和具体的服务提供商没有耦合关系</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">Service</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span></span>;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">execute</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="服务提供商类"><a href="#服务提供商类" class="headerlink" title="服务提供商类"></a>服务提供商类</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 具体的服务提供商 one</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ServiceOne</span> <span class="keyword">implements</span> <span class="title">Service</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">execute</span><span class="params">()</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		System.out.println(<span class="string">&quot;Executing ServiceOne&quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="string">&quot;ServiceOne&quot;</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 具体的服务提供商 two </span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ServiceTwo</span> <span class="keyword">implements</span> <span class="title">Service</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">execute</span><span class="params">()</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		System.out.println(<span class="string">&quot;Executing ServiceTwo&quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="string">&quot;ServiceTwo&quot;</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="容器类"><a href="#容器类" class="headerlink" title="容器类"></a>容器类</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** </span></span><br><span class="line"><span class="comment">* 上下文对象</span></span><br><span class="line"><span class="comment">* 是一个容器，负责注册和查找具体的服务</span></span><br><span class="line"><span class="comment">* 后续如有新的服务提供商，需要在这里修改代码</span></span><br><span class="line"><span class="comment">* 这里是用硬编码方式，注册服务商。</span></span><br><span class="line"><span class="comment">* 其实容器，还有其他优雅的方式处理，像 spring 那样</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">InitialContext</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 这里面的代码，简单化了</span></span><br><span class="line">    <span class="comment">// 业务复杂的话，这里面应该抽象出一个 ServiceFactory 类,复杂具体服务的创建</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> Object <span class="title">lookup</span><span class="params">(String name)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">if</span> (name.equalsIgnoreCase(<span class="string">&quot;ServiceOne&quot;</span>)) &#123;</span><br><span class="line">			System.out.println(<span class="string">&quot;Creating a new ServiceOne object&quot;</span>);</span><br><span class="line">			<span class="keyword">return</span> <span class="keyword">new</span> ServiceOne();</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span> (name.equalsIgnoreCase(<span class="string">&quot;ServiceTwo&quot;</span>)) &#123;</span><br><span class="line">			System.out.println(<span class="string">&quot;Creating a new ServiceTwo object&quot;</span>);</span><br><span class="line">			<span class="keyword">return</span> <span class="keyword">new</span> ServiceTwo();</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="缓存类"><a href="#缓存类" class="headerlink" title="缓存类"></a>缓存类</h3><blockquote>
+<p>搭配上面的 <code>InitialContext</code> 更像容器。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* 缓存</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Cache</span> </span>&#123;</span><br><span class="line">	<span class="keyword">private</span> List&lt;Service&gt; services;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">Cache</span><span class="params">()</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		services = <span class="keyword">new</span> ArrayList&lt;Service&gt;();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> Service <span class="title">getService</span><span class="params">(String serviceName)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">for</span> (Service service : services) &#123;</span><br><span class="line">			<span class="keyword">if</span> (service.getName().equalsIgnoreCase(serviceName)) &#123;</span><br><span class="line">				System.out.println(<span class="string">&quot;Returning cached &quot;</span></span><br><span class="line">								+ serviceName + <span class="string">&quot; object&quot;</span>);</span><br><span class="line">				<span class="keyword">return</span> service;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addService</span><span class="params">(Service newService)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">boolean</span> exists = <span class="keyword">false</span>;</span><br><span class="line">		<span class="keyword">for</span> (Service service : services) &#123;</span><br><span class="line">			<span class="keyword">if</span> (service.getName().equalsIgnoreCase(newService.getName())) &#123;</span><br><span class="line">				exists = <span class="keyword">true</span>;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span> (!exists) &#123;</span><br><span class="line">			services.add(newService);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="ServiceLocator-类"><a href="#ServiceLocator-类" class="headerlink" title="ServiceLocator 类"></a>ServiceLocator 类</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Locator class</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ServiceLocator</span> </span>&#123;</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">static</span> Cache cache;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">static</span></span><br><span class="line">	&#123;</span><br><span class="line">		cache = <span class="keyword">new</span> Cache();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Service <span class="title">getService</span><span class="params">(String name)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		Service service = cache.getService(name);</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> (service != <span class="keyword">null</span>) &#123;</span><br><span class="line">			<span class="keyword">return</span> service;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="comment">// 越看越像 spring里面的 ApplicationContext </span></span><br><span class="line">		InitialContext context = <span class="keyword">new</span> InitialContext();</span><br><span class="line">        <span class="comment">// getBean 方法</span></span><br><span class="line">		Service ServiceOne = (Service)context.lookup(name);</span><br><span class="line">		cache.addService(ServiceOne);</span><br><span class="line">		<span class="keyword">return</span> ServiceOne;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="测试类"><a href="#测试类" class="headerlink" title="测试类"></a>测试类</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Driver class</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ServiceLocatorPatternDemo</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		Service service = ServiceLocator.getService(<span class="string">&quot;ServiceOne&quot;</span>);</span><br><span class="line">		service.execute();</span><br><span class="line"></span><br><span class="line">		service = ServiceLocator.getService(<span class="string">&quot;ServiceTwo&quot;</span>);</span><br><span class="line">		service.execute();</span><br><span class="line"></span><br><span class="line">		service = ServiceLocator.getService(<span class="string">&quot;ServiceOne&quot;</span>);</span><br><span class="line">		service.execute();</span><br><span class="line"></span><br><span class="line">		service = ServiceLocator.getService(<span class="string">&quot;ServiceTwo&quot;</span>);</span><br><span class="line">		service.execute();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h2><ol>
+    <li>`ServiceLocator` 配合 `cache`，完成了`service`的单例模式。并不需要具体的`service`自己实现单例模式，通过`cache` 完成了单例的需求。这在某些场景下，很实用，假如考虑，创建具体的服务提供商对象很占用资源，但是具体的服务又是第三方提供的，这时候就可以用这种思路实现单例，缓存起来。</li>
+    <li>程序可以在运行时动态调整依赖</li>
+    <li>解耦合，服务消费者和服务提供者之间并没有之间的联系，所有的联系都在注册表中</li>
+</ol>
+
+
+
+<hr>
+<h2 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h2><ol>
+    <li>如果服务提供商不存在，本来应该在编译期间就会被发现的，因为是直接依赖。现在转移到运行期间才能发现。（其实算不得缺点，将依赖耦合解耦了，就这样）</li>
+</ol>
+
+
+
+<hr>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><blockquote>
+<p>最后，设计模式不能完全理解，或者想不到对应的案列，是正常的。毕竟设计模式是总结会来的经验性准则，需要一定的阅历或者说经历过类似的坑，才能感同身受。</p>
+<p>就像后来的我们学 <code>spring</code> 框架，永远也不会多么深刻的理<code>spring</code>的轻量级，轻量在哪里。但是如果你是从<code>EJB</code> 时代过来的，你就会 会心一笑。</p>
+</blockquote>
+<!-- flag of hidden posts -->
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Service-Locator-Pattern/" rel="tag"><i class="fa fa-tags"></i> Service Locator Pattern</a>
+          </div>
+
+        
+
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="waline-comments"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">安</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">77k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">1:10</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="https://cdn.jsdelivr.net/npm/ribbon.js@1.0.2/dist/ribbon.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@next-theme/pjax@0.5.0/pjax.min.js" integrity="sha256-3NkoLDrmHLTYj7csHIZSr0MHAFTXth7Ua/DDt4MRUAg=" crossorigin="anonymous"></script>
+
+
+
+
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/bookmark.js"></script><script src="/js/pjax.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+  <script data-pjax async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+<script class="next-config" data-name="waline" type="application/json">{"lang":"zh-cn","enable":true,"serverURL":"https://comment-api-ruddy.vercel.app/","placeholder":"(你想说些什么~)","avatar":"wavatar","pageSize":10,"visitor":true,"comment_count":true,"requiredFields":["nick"],"dark":"body.darkmode--activated","meta":["nick","mail","link"],"libUrl":"https://cdn.jsdelivr.net/npm/@waline/client/dist/Waline.min.js","el":"#waline-comments","path":"/p/d93422ca.html"}</script>
+<script>
+document.addEventListener('page:loaded', () => {
+  NexT.utils.loadComments(CONFIG.waline.el).then(() => 
+    NexT.utils.getScript(CONFIG.waline.libUrl, { condition: window.Waline })
+  ).then(() => {
+    new Waline(CONFIG.waline);
+  });
+});
+</script><script src="https://cdn.jsdelivr.net/npm/darkmode-js@1.5.7/lib/darkmode-js.min.js"></script>
+
+<script>
+var options = {
+  bottom: '64px',
+  right: 'unset',
+  left: '32px',
+  time: '0.5s',
+  mixColor: 'transparent',
+  backgroundColor: 'transparent',
+  buttonColorDark: '#100f2c',
+  buttonColorLight: '#fff',
+  saveInCookies: true,
+  label: '🌓',
+  autoMatchOsTheme: true
+}
+const darkmode = new Darkmode(options);
+window.darkmode = darkmode;
+darkmode.showWidget();
+</script>
+
+</body>
+</html>
