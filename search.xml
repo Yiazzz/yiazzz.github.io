@@ -546,6 +546,87 @@ Class.forName(<span class="string">&quot;com.example.demo.Hello&quot;</span>,<sp
       </tags>
   </entry>
   <entry>
+    <title>设计模式のService Locator Pattern</title>
+    <url>/p/d93422ca.html</url>
+    <content><![CDATA[<blockquote class="blockquote-center">
+<p>Service Locator Pattern，学习spring，遇到了的设计模式 。<br><br>                                <a href="https://www.geeksforgeeks.org/service-locator-pattern">geeksforgeeks的原文</a></p>
+
+</blockquote>
+
+<p><code>Service Locator Pattern</code>是用 抽象层 封装 获取服务 的过程。</p>
+<p>使用一个被称为 <code>service locator</code>的中心注册表，<code>service locator</code> 根据请求返回执行具体任务所需要的的信息。</p>
+<p>当服务消费者请求服务实例时，<code>serviceLocator</code>负责返回对应的服务实例。</p>
+<hr>
+<h2 id="service-Locator"><a href="#service-Locator" class="headerlink" title="service Locator"></a><strong>service Locator</strong></h2><p><code>service locator</code> 将 查找服务的<code>API</code>、服务提供者依赖、查找的复杂性以及业务对象的创建做了抽象，仅对服务消费者暴露一个简单的接口，这样将复杂封装在自己内部，使得客户端变的简单。</p>
+<hr>
+<h2 id="InitialContext"><a href="#InitialContext" class="headerlink" title="InitialContext"></a><strong>InitialContext</strong></h2><p>初始化上下文，类似于 <code>spring</code>里面的容器概念。如果对容器的概念也不清楚，那就只可意会不可言传了。</p>
+<p>是整个服务查找和创建过程的起点。将所有的服务提供商放进这个容器里面，如果，后续有新的服务提供商加入进来，也需要将它们放进这个<code>InitialContext</code>容器来。</p>
+<p><code>InitialContext</code> 根据具体的业务对象类型返回具体服务对象。</p>
+<hr>
+<h2 id="ServiceFactory"><a href="#ServiceFactory" class="headerlink" title="ServiceFactory"></a><strong>ServiceFactory</strong></h2><p>服务工厂对象负责管理 业务服务对象 的生命周期，何时实例化，何时销毁等。</p>
+<hr>
+<h2 id="BusinessService"><a href="#BusinessService" class="headerlink" title="BusinessService"></a><strong>BusinessService</strong></h2><p>业务服务对象，是一个角色，由客户端需求的服务对象来扮演。所以说，就是具体的服务提供商对象。</p>
+<p>业务服务对象 由 服务工厂创建、查找、删除</p>
+<hr>
+<h2 id="图例"><a href="#图例" class="headerlink" title="图例"></a>图例</h2><p><img src="https://blog-1307734415.cos.ap-nanjing.myqcloud.com/blog/images/ServiceLocator.jpg" alt="img"></p>
+<p>以前的类关系</p>
+<blockquote>
+<p>服务消费者和服务提供商，绑定在一起，增加或删除服务提供商，都需要更改服务消费者中的代码。</p>
+</blockquote>
+<blockquote>
+<p>在编译的时候，具体的服务提供商的类就需要存在。</p>
+</blockquote>
+<hr>
+<p><img src="https://blog-1307734415.cos.ap-nanjing.myqcloud.com/blog/images/serviceLocatorPattern.jpg" alt="img"></p>
+<p><code>Service Locator Pattern</code> 模式的类关系</p>
+<blockquote>
+<p>服务提供商和服务消费者之间的耦合，转移到 <code>locator</code> 里面</p>
+</blockquote>
+<blockquote>
+<p>在编译的时候，具体的服务提供商的类不需要存在。增加或修改服务提供商，服务消费者也不需要改代码。</p>
+</blockquote>
+<hr>
+<h2 id="java-code-demo"><a href="#java-code-demo" class="headerlink" title="java code demo"></a>java code demo</h2><h3 id="服务接口"><a href="#服务接口" class="headerlink" title="服务接口"></a>服务接口</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* 首先将 服务 的功能，抽取出来。</span></span><br><span class="line"><span class="comment">* 这个抽取很有意义，在后面这个接口将代替具体的服务提供商，参与到逻辑中。</span></span><br><span class="line"><span class="comment">* 将具体的服务提供商，排除在外，这样整体逻辑，将和具体的服务提供商无关。</span></span><br><span class="line"><span class="comment">* 也就是和具体的服务提供商没有耦合关系</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">Service</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span></span>;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">execute</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="服务提供商类"><a href="#服务提供商类" class="headerlink" title="服务提供商类"></a>服务提供商类</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 具体的服务提供商 one</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ServiceOne</span> <span class="keyword">implements</span> <span class="title">Service</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">execute</span><span class="params">()</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		System.out.println(<span class="string">&quot;Executing ServiceOne&quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="string">&quot;ServiceOne&quot;</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 具体的服务提供商 two </span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ServiceTwo</span> <span class="keyword">implements</span> <span class="title">Service</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">execute</span><span class="params">()</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		System.out.println(<span class="string">&quot;Executing ServiceTwo&quot;</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="string">&quot;ServiceTwo&quot;</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="容器类"><a href="#容器类" class="headerlink" title="容器类"></a>容器类</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/** </span></span><br><span class="line"><span class="comment">* 上下文对象</span></span><br><span class="line"><span class="comment">* 是一个容器，负责注册和查找具体的服务</span></span><br><span class="line"><span class="comment">* 后续如有新的服务提供商，需要在这里修改代码</span></span><br><span class="line"><span class="comment">* 这里是用硬编码方式，注册服务商。</span></span><br><span class="line"><span class="comment">* 其实容器，还有其他优雅的方式处理，像 spring 那样</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">InitialContext</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 这里面的代码，简单化了</span></span><br><span class="line">    <span class="comment">// 业务复杂的话，这里面应该抽象出一个 ServiceFactory 类,复杂具体服务的创建</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> Object <span class="title">lookup</span><span class="params">(String name)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">if</span> (name.equalsIgnoreCase(<span class="string">&quot;ServiceOne&quot;</span>)) &#123;</span><br><span class="line">			System.out.println(<span class="string">&quot;Creating a new ServiceOne object&quot;</span>);</span><br><span class="line">			<span class="keyword">return</span> <span class="keyword">new</span> ServiceOne();</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span> <span class="keyword">if</span> (name.equalsIgnoreCase(<span class="string">&quot;ServiceTwo&quot;</span>)) &#123;</span><br><span class="line">			System.out.println(<span class="string">&quot;Creating a new ServiceTwo object&quot;</span>);</span><br><span class="line">			<span class="keyword">return</span> <span class="keyword">new</span> ServiceTwo();</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="缓存类"><a href="#缓存类" class="headerlink" title="缓存类"></a>缓存类</h3><blockquote>
+<p>搭配上面的 <code>InitialContext</code> 更像容器。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* 缓存</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Cache</span> </span>&#123;</span><br><span class="line">	<span class="keyword">private</span> List&lt;Service&gt; services;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">Cache</span><span class="params">()</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		services = <span class="keyword">new</span> ArrayList&lt;Service&gt;();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> Service <span class="title">getService</span><span class="params">(String serviceName)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">for</span> (Service service : services) &#123;</span><br><span class="line">			<span class="keyword">if</span> (service.getName().equalsIgnoreCase(serviceName)) &#123;</span><br><span class="line">				System.out.println(<span class="string">&quot;Returning cached &quot;</span></span><br><span class="line">								+ serviceName + <span class="string">&quot; object&quot;</span>);</span><br><span class="line">				<span class="keyword">return</span> service;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">addService</span><span class="params">(Service newService)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="keyword">boolean</span> exists = <span class="keyword">false</span>;</span><br><span class="line">		<span class="keyword">for</span> (Service service : services) &#123;</span><br><span class="line">			<span class="keyword">if</span> (service.getName().equalsIgnoreCase(newService.getName())) &#123;</span><br><span class="line">				exists = <span class="keyword">true</span>;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span> (!exists) &#123;</span><br><span class="line">			services.add(newService);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="ServiceLocator-类"><a href="#ServiceLocator-类" class="headerlink" title="ServiceLocator 类"></a>ServiceLocator 类</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// Locator class</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ServiceLocator</span> </span>&#123;</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">static</span> Cache cache;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">static</span></span><br><span class="line">	&#123;</span><br><span class="line">		cache = <span class="keyword">new</span> Cache();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Service <span class="title">getService</span><span class="params">(String name)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		Service service = cache.getService(name);</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> (service != <span class="keyword">null</span>) &#123;</span><br><span class="line">			<span class="keyword">return</span> service;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="comment">// 越看越像 spring里面的 ApplicationContext </span></span><br><span class="line">		InitialContext context = <span class="keyword">new</span> InitialContext();</span><br><span class="line">        <span class="comment">// getBean 方法</span></span><br><span class="line">		Service ServiceOne = (Service)context.lookup(name);</span><br><span class="line">		cache.addService(ServiceOne);</span><br><span class="line">		<span class="keyword">return</span> ServiceOne;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="测试类"><a href="#测试类" class="headerlink" title="测试类"></a>测试类</h3><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">// Driver class</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ServiceLocatorPatternDemo</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		Service service = ServiceLocator.getService(<span class="string">&quot;ServiceOne&quot;</span>);</span><br><span class="line">		service.execute();</span><br><span class="line"></span><br><span class="line">		service = ServiceLocator.getService(<span class="string">&quot;ServiceTwo&quot;</span>);</span><br><span class="line">		service.execute();</span><br><span class="line"></span><br><span class="line">		service = ServiceLocator.getService(<span class="string">&quot;ServiceOne&quot;</span>);</span><br><span class="line">		service.execute();</span><br><span class="line"></span><br><span class="line">		service = ServiceLocator.getService(<span class="string">&quot;ServiceTwo&quot;</span>);</span><br><span class="line">		service.execute();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h2><ol>
+    <li>`ServiceLocator` 配合 `cache`，完成了`service`的单例模式。并不需要具体的`service`自己实现单例模式，通过`cache` 完成了单例的需求。这在某些场景下，很实用，假如考虑，创建具体的服务提供商对象很占用资源，但是具体的服务又是第三方提供的，这时候就可以用这种思路实现单例，缓存起来。</li>
+    <li>程序可以在运行时动态调整依赖</li>
+    <li>解耦合，服务消费者和服务提供者之间并没有之间的联系，所有的联系都在注册表中</li>
+</ol>
+
+
+
+<hr>
+<h2 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h2><ol>
+    <li>如果服务提供商不存在，本来应该在编译期间就会被发现的，因为是直接依赖。现在转移到运行期间才能发现。（其实算不得缺点，将依赖耦合解耦了，就这样）</li>
+</ol>
+
+
+
+<hr>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><blockquote>
+<p>最后，设计模式不能完全理解，或者想不到对应的案列，是正常的。毕竟设计模式是总结会来的经验性准则，需要一定的阅历或者说经历过类似的坑，才能感同身受。</p>
+<p>就像后来的我们学 <code>spring</code> 框架，永远也不会多么深刻的理<code>spring</code>的轻量级，轻量在哪里。但是如果你是从<code>EJB</code> 时代过来的，你就会 会心一笑。</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>专栏</category>
+        <category>设计模式</category>
+      </categories>
+      <tags>
+        <tag>Service Locator Pattern</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>谁陪你去浪迹天涯...</title>
     <url>/p/1255621.html</url>
     <content><![CDATA[<blockquote class="blockquote-center">
