@@ -6,7 +6,7 @@
   <link href="https://yiazzz.github.io/atom.xml" rel="self"/>
   
   <link href="https://yiazzz.github.io/"/>
-  <updated>2021-10-11T02:15:24.745Z</updated>
+  <updated>2021-11-13T14:17:47.168Z</updated>
   <id>https://yiazzz.github.io/</id>
   
   <author>
@@ -15,6 +15,27 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>JVM中关于类加载子系统的故事。</title>
+    <link href="https://yiazzz.github.io/p/d93a162ca.html"/>
+    <id>https://yiazzz.github.io/p/d93a162ca.html</id>
+    <published>2021-11-13T14:12:00.000Z</published>
+    <updated>2021-11-13T14:17:47.168Z</updated>
+    
+    
+    <summary type="html">关于JVM的类加载子系统，诸如：类的加载、验证、准备、解析、初始化等各个阶段发生的故事。类加载器的故事以及双亲委派机制，最后自己自定义一个类加载器，体验下，双亲委派机制和打破双亲委派机制。</summary>
+    
+    
+    
+    <category term="专栏" scheme="https://yiazzz.github.io/categories/%E4%B8%93%E6%A0%8F/"/>
+    
+    <category term="JVM" scheme="https://yiazzz.github.io/categories/%E4%B8%93%E6%A0%8F/JVM/"/>
+    
+    
+    <category term="类加载子系统" scheme="https://yiazzz.github.io/tags/%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%AD%90%E7%B3%BB%E7%BB%9F/"/>
+    
+  </entry>
   
   <entry>
     <title>谁陪你去浪迹天涯...</title>
