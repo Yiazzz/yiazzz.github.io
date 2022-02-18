@@ -6,7 +6,7 @@
   <link href="https://yiazzz.github.io/atom.xml" rel="self"/>
   
   <link href="https://yiazzz.github.io/"/>
-  <updated>2021-11-13T14:17:47.168Z</updated>
+  <updated>2021-11-13T14:50:40.580Z</updated>
   <id>https://yiazzz.github.io/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="https://yiazzz.github.io/p/d93a162ca.html"/>
     <id>https://yiazzz.github.io/p/d93a162ca.html</id>
     <published>2021-11-13T14:12:00.000Z</published>
-    <updated>2021-11-13T14:17:47.168Z</updated>
+    <updated>2021-11-13T14:50:40.580Z</updated>
     
     
     <summary type="html">关于JVM的类加载子系统，诸如：类的加载、验证、准备、解析、初始化等各个阶段发生的故事。类加载器的故事以及双亲委派机制，最后自己自定义一个类加载器，体验下，双亲委派机制和打破双亲委派机制。</summary>

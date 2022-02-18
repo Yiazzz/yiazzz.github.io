@@ -49,7 +49,7 @@
 <meta property="og:image" content="https://blog-1307734415.cos.ap-nanjing.myqcloud.com/blog/images/20200717122431.png">
 <meta property="og:image" content="https://images2015.cnblogs.com/blog/801753/201509/801753-20150928224102605-1436171001.png">
 <meta property="article:published_time" content="2021-11-13T14:12:00.000Z">
-<meta property="article:modified_time" content="2021-11-13T14:17:47.168Z">
+<meta property="article:modified_time" content="2021-11-13T14:50:40.580Z">
 <meta property="article:author" content="安">
 <meta property="article:tag" content="类加载子系统">
 <meta name="twitter:card" content="summary">
@@ -351,7 +351,7 @@
       <span class="post-meta-item-text">发表于</span>
       
 
-      <time title="创建时间：2021-11-13 22:12:00 / 修改时间：22:17:47" itemprop="dateCreated datePublished" datetime="2021-11-13T22:12:00+08:00">2021-11-13</time>
+      <time title="创建时间：2021-11-13 22:12:00 / 修改时间：22:50:40" itemprop="dateCreated datePublished" datetime="2021-11-13T22:12:00+08:00">2021-11-13</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -670,15 +670,15 @@
 <blockquote>
 <p>能赋值的原因是，类变量一开始，就会被扫描一遍，全部记录在一张表中，这次扫描只是扫描有多少定义变量，赋值是在后面发生的。所以代码中可以对定义在后面的变量赋值，因为其实赋值的时候，变量已经记录在册了。但是这个变量此时还没有被完全初始化，所以不能访问使用它。</p>
 </blockquote>
-<pre><code class="highlight java"><span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123;
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">class</span> <span class="token class-name">Test</span> <span class="token punctuation">&#123;</span>
 
-    <span class="keyword">static</span>  &#123;
-        i = <span class="number">99</span> ;
-        System.out.println(i); <span class="comment">// error ，非法向前引用</span>
-    &#125;
+    <span class="token keyword">static</span>  <span class="token punctuation">&#123;</span>
+        i <span class="token operator">=</span> <span class="token number">99</span> <span class="token punctuation">;</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>i<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// error ，非法向前引用</span>
+    <span class="token punctuation">&#125;</span>
 
-    <span class="keyword">static</span> <span class="keyword">int</span> i = <span class="number">9</span> ;
-&#125;</code></pre>
+    <span class="token keyword">static</span> <span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">9</span> <span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 
 
@@ -703,7 +703,7 @@
 <p>加载<code>Java</code>核心源代码库，<code>JDK/lib</code>目录下面的文件，如：<code>rt.jar</code> 是<code>runtime</code> 。不是说<code>lib</code>路径下面的文件，都会被加载，启动类加载器，仅加载自己认识的文件。第三方<code>jar</code>包，放进该目录下面，启动类加载器也不会加载。</p>
 <p>启动类加载器，我们是获取不到的，使用<code>API</code>获取以后，返回的是<code>null</code>。如果我们想委托启动类加载器，直接使用 <code>null</code>代替即可。</p>
 <blockquote>
-<pre><code class="highlight xml"><span class="comment">&lt;!-- 认识的文件 --&gt;</span>
+<pre class="line-numbers language-xml" data-language="xml"><code class="language-xml"><span class="token comment">&lt;!-- 认识的文件 --></span>
 &lt;
 file:/C:/Program%20Files/Java/jre1.8.0_131/lib/resources.jar
 file:/C:/Program%20Files/Java/jre1.8.0_131/lib/rt.jar
@@ -712,7 +712,7 @@ file:/C:/Program%20Files/Java/jre1.8.0_131/lib/jsse.jar
 file:/C:/Program%20Files/Java/jre1.8.0_131/lib/jce.jar
 file:/C:/Program%20Files/Java/jre1.8.0_131/lib/charsets.jar
 file:/C:/Program%20Files/Java/jre1.8.0_131/lib/jfr.jar
-file:/C:/Program%20Files/Java/jre1.8.0_131/classes</code></pre></blockquote>
+file:/C:/Program%20Files/Java/jre1.8.0_131/classes<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></blockquote>
 </li>
 <li><p>扩展类加载器：</p>
 <p>加载<code>\]ib\ext</code>目录中的文件，或者被<code>java.ext.dirs</code>指定的目录下面的文件。这个就没有认识不认识一说了，会加载目录下面的所有文件。</p>
@@ -724,9 +724,9 @@ file:/C:/Program%20Files/Java/jre1.8.0_131/classes</code></pre></blockquote>
 </li>
 </ol>
 <p>获取加载当前类的加载器的代码：</p>
-<pre><code class="highlight java"><span class="keyword">this</span>.getClass().getClassLoader() ;
-<span class="comment">// 或者指定名字</span>
-String.class.getClassLoader() ;</code></pre>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">this</span><span class="token punctuation">.</span><span class="token function">getClass</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getClassLoader</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">;</span>
+<span class="token comment">// 或者指定名字</span>
+<span class="token class-name">String</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">.</span><span class="token function">getClassLoader</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
 <hr>
 <h4 id="类加载器之间的关系"><a href="#类加载器之间的关系" class="headerlink" title="类加载器之间的关系"></a>类加载器之间的关系</h4><img src="https://images2015.cnblogs.com/blog/801753/201509/801753-20150928224102605-1436171001.png" alt="类加载器之间关系"  />
@@ -739,77 +739,77 @@ String.class.getClassLoader() ;</code></pre>
 <li>重写 <code>findClass</code> 方法</li>
 <li><code>findClass</code> 中调用 <code>DefineClass</code> 返回。</li>
 </ol>
-<pre><code class="highlight java"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyClassLoader</span> <span class="keyword">extends</span> <span class="title">ClassLoader</span> </span>&#123;
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">MyClassLoader</span> <span class="token keyword">extends</span> <span class="token class-name">ClassLoader</span> <span class="token punctuation">&#123;</span>
 
-    <span class="keyword">private</span> String path ;
+    <span class="token keyword">private</span> <span class="token class-name">String</span> path <span class="token punctuation">;</span>
 
-    <span class="comment">// 指定加载路径</span>
-    <span class="function"><span class="keyword">public</span> <span class="title">MyClassLoader</span><span class="params">(String path)</span> </span>&#123;
-        <span class="keyword">this</span>.path = path ;
-    &#125;
+    <span class="token comment">// 指定加载路径</span>
+    <span class="token keyword">public</span> <span class="token class-name">MyClassLoader</span><span class="token punctuation">(</span><span class="token class-name">String</span> path<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>path <span class="token operator">=</span> path <span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
 
-    <span class="comment">// 这里要想破坏 双亲委派机制，就设置 parent = null</span>
-    <span class="function"><span class="keyword">public</span> <span class="title">MyClassLoader</span><span class="params">(ClassLoader parent)</span> </span>&#123;
-        <span class="keyword">super</span>(parent);
-    &#125;
+    <span class="token comment">// 这里要想破坏 双亲委派机制，就设置 parent = null</span>
+    <span class="token keyword">public</span> <span class="token class-name">MyClassLoader</span><span class="token punctuation">(</span><span class="token class-name">ClassLoader</span> parent<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">super</span><span class="token punctuation">(</span>parent<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
 
-    <span class="meta">@Override</span>
-    <span class="keyword">protected</span> Class&lt;?&gt; findClass(String name) <span class="keyword">throws</span> ClassNotFoundException &#123;
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">protected</span> <span class="token class-name">Class</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token operator">?</span><span class="token punctuation">></span></span> <span class="token function">findClass</span><span class="token punctuation">(</span><span class="token class-name">String</span> name<span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">ClassNotFoundException</span> <span class="token punctuation">&#123;</span>
 
-        <span class="comment">// 这里正常需要解析这个 类的全限定名</span>
-        <span class="comment">// 我这里class文件直接放在 J 盘根路径下，所以直接截取最后的名字。</span>
-        String tempName = name.substring(name.lastIndexOf(<span class="string">&quot;.&quot;</span>)+<span class="number">1</span>);
-        File file = <span class="keyword">new</span> File(path+File.separator+tempName+<span class="string">&quot;.class&quot;</span>);
-        <span class="keyword">byte</span>[] classBytes = <span class="keyword">null</span> ;
-        <span class="keyword">try</span> &#123;
-            classBytes = getClassBytes(file);
-        &#125; <span class="keyword">catch</span> (Exception e) &#123;
-           <span class="keyword">throw</span> <span class="keyword">new</span> ClassNotFoundException(name+<span class="string">&quot; 文件未找到&quot;</span>);
-        &#125;
+        <span class="token comment">// 这里正常需要解析这个 类的全限定名</span>
+        <span class="token comment">// 我这里class文件直接放在 J 盘根路径下，所以直接截取最后的名字。</span>
+        <span class="token class-name">String</span> tempName <span class="token operator">=</span> name<span class="token punctuation">.</span><span class="token function">substring</span><span class="token punctuation">(</span>name<span class="token punctuation">.</span><span class="token function">lastIndexOf</span><span class="token punctuation">(</span><span class="token string">"."</span><span class="token punctuation">)</span><span class="token operator">+</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name">File</span> file <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">File</span><span class="token punctuation">(</span>path<span class="token operator">+</span><span class="token class-name">File</span><span class="token punctuation">.</span>separator<span class="token operator">+</span>tempName<span class="token operator">+</span><span class="token string">".class"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">byte</span><span class="token punctuation">[</span><span class="token punctuation">]</span> classBytes <span class="token operator">=</span> <span class="token keyword">null</span> <span class="token punctuation">;</span>
+        <span class="token keyword">try</span> <span class="token punctuation">&#123;</span>
+            classBytes <span class="token operator">=</span> <span class="token function">getClassBytes</span><span class="token punctuation">(</span>file<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">Exception</span> e<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+           <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">ClassNotFoundException</span><span class="token punctuation">(</span>name<span class="token operator">+</span><span class="token string">" 文件未找到"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
 
-        <span class="comment">// name 是类的权限名。要和字节码中的名字匹配</span>
-        <span class="keyword">return</span> defineClass(name, classBytes, <span class="number">0</span>, classBytes.length);
-    &#125;
+        <span class="token comment">// name 是类的权限名。要和字节码中的名字匹配</span>
+        <span class="token keyword">return</span> <span class="token function">defineClass</span><span class="token punctuation">(</span>name<span class="token punctuation">,</span> classBytes<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> classBytes<span class="token punctuation">.</span>length<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
 
 
-    <span class="comment">// 太久没用过 IO ，已经忘记了。。。</span>
-    <span class="comment">// 其实核心就是这个方法。</span>
-    <span class="comment">// 从哪里加载，如何加载 字节码文件。解密工作也可以再这里做</span>
-    <span class="keyword">private</span> <span class="keyword">byte</span>[] getClassBytes(File file) <span class="keyword">throws</span> Exception &#123;
+    <span class="token comment">// 太久没用过 IO ，已经忘记了。。。</span>
+    <span class="token comment">// 其实核心就是这个方法。</span>
+    <span class="token comment">// 从哪里加载，如何加载 字节码文件。解密工作也可以再这里做</span>
+    <span class="token keyword">private</span> <span class="token keyword">byte</span><span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token function">getClassBytes</span><span class="token punctuation">(</span><span class="token class-name">File</span> file<span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">Exception</span> <span class="token punctuation">&#123;</span>
 
-        FileInputStream fis = <span class="keyword">new</span> FileInputStream(file);
-        FileChannel fc = fis.getChannel();
-        ByteArrayOutputStream baos = <span class="keyword">new</span> ByteArrayOutputStream();
-        WritableByteChannel wbc = Channels.newChannel(baos);
-        ByteBuffer by = ByteBuffer.allocate(<span class="number">1024</span>);
+        <span class="token class-name">FileInputStream</span> fis <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">FileInputStream</span><span class="token punctuation">(</span>file<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name">FileChannel</span> fc <span class="token operator">=</span> fis<span class="token punctuation">.</span><span class="token function">getChannel</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name">ByteArrayOutputStream</span> baos <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">ByteArrayOutputStream</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name">WritableByteChannel</span> wbc <span class="token operator">=</span> <span class="token class-name">Channels</span><span class="token punctuation">.</span><span class="token function">newChannel</span><span class="token punctuation">(</span>baos<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name">ByteBuffer</span> by <span class="token operator">=</span> <span class="token class-name">ByteBuffer</span><span class="token punctuation">.</span><span class="token function">allocate</span><span class="token punctuation">(</span><span class="token number">1024</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-        <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;
-            <span class="keyword">int</span> i = fc.read(by);
-            <span class="keyword">if</span> (i == <span class="number">0</span> || i == -<span class="number">1</span>)
-                <span class="keyword">break</span>;
-            by.flip();
-            wbc.write(by);
-            by.clear();
-        &#125;
+        <span class="token keyword">while</span> <span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">int</span> i <span class="token operator">=</span> fc<span class="token punctuation">.</span><span class="token function">read</span><span class="token punctuation">(</span>by<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>i <span class="token operator">==</span> <span class="token number">0</span> <span class="token operator">||</span> i <span class="token operator">==</span> <span class="token operator">-</span><span class="token number">1</span><span class="token punctuation">)</span>
+                <span class="token keyword">break</span><span class="token punctuation">;</span>
+            by<span class="token punctuation">.</span><span class="token function">flip</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            wbc<span class="token punctuation">.</span><span class="token function">write</span><span class="token punctuation">(</span>by<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            by<span class="token punctuation">.</span><span class="token function">clear</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
 
-        fis.close();
+        fis<span class="token punctuation">.</span><span class="token function">close</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-        <span class="keyword">return</span> baos.toByteArray();
-    &#125;
-&#125;</code></pre>
+        <span class="token keyword">return</span> baos<span class="token punctuation">.</span><span class="token function">toByteArray</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>测试调用</p>
-<pre><code class="highlight java">MyClassLoader myClassLoader = <span class="keyword">new</span> MyClassLoader(<span class="string">&quot;J:&quot;</span>);
-       <span class="comment">// 三个参数。 类限定名   是否初始化， 类加载器</span>
-Class.forName(<span class="string">&quot;com.example.demo.Hello&quot;</span>,<span class="keyword">true</span>,myClassLoader);</code></pre>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token class-name">MyClassLoader</span> myClassLoader <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">MyClassLoader</span><span class="token punctuation">(</span><span class="token string">"J:"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+       <span class="token comment">// 三个参数。 类限定名   是否初始化， 类加载器</span>
+<span class="token class-name">Class</span><span class="token punctuation">.</span><span class="token function">forName</span><span class="token punctuation">(</span><span class="token string">"com.example.demo.Hello"</span><span class="token punctuation">,</span><span class="token boolean">true</span><span class="token punctuation">,</span>myClassLoader<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
 <p><code>Hello.java</code></p>
-<pre><code class="highlight java"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Hello</span> </span>&#123;
-    <span class="keyword">static</span> &#123;
-        System.out.print(<span class="string">&quot;我被加载 &quot;</span>);
-        System.out.println(Hello.class.getClassLoader() +<span class="string">&quot; 了！！&quot;</span>);
-    &#125;
-&#125;</code></pre>
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Hello</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">static</span> <span class="token punctuation">&#123;</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">print</span><span class="token punctuation">(</span><span class="token string">"我被加载 "</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token class-name">Hello</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">.</span><span class="token function">getClassLoader</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">+</span><span class="token string">" 了！！"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p><code>output</code></p>
 <blockquote>
@@ -830,59 +830,59 @@ Class.forName(<span class="string">&quot;com.example.demo.Hello&quot;</span>,<sp
 <hr>
 <h4 id="双亲委派模型"><a href="#双亲委派模型" class="headerlink" title="双亲委派模型"></a>双亲委派模型</h4><p>有了上面类加载器之间的关系，理解双亲委派模型，就容易多了，具体含义就在下面的方法中。</p>
 <h5 id="loadClass-方法"><a href="#loadClass-方法" class="headerlink" title="loadClass 方法"></a>loadClass 方法</h5><p>这个方法是加载类的逻辑所在，也就是双亲委派模型的具体实现。方法在抽象类<code>ClassLoader</code>中。</p>
-<pre><code class="highlight java"><span class="keyword">protected</span> Class&lt;?&gt; loadClass(String name, <span class="keyword">boolean</span> resolve)
-      <span class="keyword">throws</span> ClassNotFoundException
-  &#123;
-      <span class="keyword">synchronized</span> (getClassLoadingLock(name)) &#123;
-          <span class="comment">// 首先根据类的全限定名检查，类是否被加载过。</span>
-          Class&lt;?&gt; c = findLoadedClass(name);
-          <span class="comment">// 如果为 null 没找到，则开始加载</span>
-          <span class="keyword">if</span> (c == <span class="keyword">null</span>) &#123;
-              <span class="keyword">long</span> t0 = System.nanoTime();
-              <span class="keyword">try</span> &#123;
-                  <span class="comment">// 判断当前类加载器的父类是否是 null</span>
-                  <span class="comment">// 前面加载器分类那讲过 null,即代表是 启动类加载器</span>
-                  <span class="keyword">if</span> (parent != <span class="keyword">null</span>) &#123;
-                      <span class="comment">// 父类加载器不是启动类加载器</span>
-                      <span class="comment">// 则委托 父类加载器加载</span>
-                      c = parent.loadClass(name, <span class="keyword">false</span>);
-                  &#125; <span class="keyword">else</span> &#123;
-                      <span class="comment">// 如果父类加载器是启动类加载器</span>
-                      <span class="comment">// 则委托 启动类加载器 加载。</span>
-                      <span class="comment">// 使用下面独特的方法</span>
-                      <span class="comment">// 而不是简单的  parent.loadClass</span>
-                      c = findBootstrapClassOrNull(name);
-                  &#125;
-                  <span class="comment">// 这里报错的原因，委托的父类加载器</span>
-                  <span class="comment">// 并没有完成请求</span>
-                  <span class="comment">// 也就是父类加载器的加载目录没有发现目标类</span>
-              &#125; <span class="keyword">catch</span> (ClassNotFoundException e) &#123;
-                 <span class="comment">// 这个异常是 非启动类加载器 抛出的。</span>
-              &#125;
+<pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">protected</span> <span class="token class-name">Class</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token operator">?</span><span class="token punctuation">></span></span> <span class="token function">loadClass</span><span class="token punctuation">(</span><span class="token class-name">String</span> name<span class="token punctuation">,</span> <span class="token keyword">boolean</span> resolve<span class="token punctuation">)</span>
+      <span class="token keyword">throws</span> <span class="token class-name">ClassNotFoundException</span>
+  <span class="token punctuation">&#123;</span>
+      <span class="token keyword">synchronized</span> <span class="token punctuation">(</span><span class="token function">getClassLoadingLock</span><span class="token punctuation">(</span>name<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+          <span class="token comment">// 首先根据类的全限定名检查，类是否被加载过。</span>
+          <span class="token class-name">Class</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token operator">?</span><span class="token punctuation">></span></span> c <span class="token operator">=</span> <span class="token function">findLoadedClass</span><span class="token punctuation">(</span>name<span class="token punctuation">)</span><span class="token punctuation">;</span>
+          <span class="token comment">// 如果为 null 没找到，则开始加载</span>
+          <span class="token keyword">if</span> <span class="token punctuation">(</span>c <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+              <span class="token keyword">long</span> t0 <span class="token operator">=</span> <span class="token class-name">System</span><span class="token punctuation">.</span><span class="token function">nanoTime</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+              <span class="token keyword">try</span> <span class="token punctuation">&#123;</span>
+                  <span class="token comment">// 判断当前类加载器的父类是否是 null</span>
+                  <span class="token comment">// 前面加载器分类那讲过 null,即代表是 启动类加载器</span>
+                  <span class="token keyword">if</span> <span class="token punctuation">(</span>parent <span class="token operator">!=</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                      <span class="token comment">// 父类加载器不是启动类加载器</span>
+                      <span class="token comment">// 则委托 父类加载器加载</span>
+                      c <span class="token operator">=</span> parent<span class="token punctuation">.</span><span class="token function">loadClass</span><span class="token punctuation">(</span>name<span class="token punctuation">,</span> <span class="token boolean">false</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                  <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+                      <span class="token comment">// 如果父类加载器是启动类加载器</span>
+                      <span class="token comment">// 则委托 启动类加载器 加载。</span>
+                      <span class="token comment">// 使用下面独特的方法</span>
+                      <span class="token comment">// 而不是简单的  parent.loadClass</span>
+                      c <span class="token operator">=</span> <span class="token function">findBootstrapClassOrNull</span><span class="token punctuation">(</span>name<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                  <span class="token punctuation">&#125;</span>
+                  <span class="token comment">// 这里报错的原因，委托的父类加载器</span>
+                  <span class="token comment">// 并没有完成请求</span>
+                  <span class="token comment">// 也就是父类加载器的加载目录没有发现目标类</span>
+              <span class="token punctuation">&#125;</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">ClassNotFoundException</span> e<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                 <span class="token comment">// 这个异常是 非启动类加载器 抛出的。</span>
+              <span class="token punctuation">&#125;</span>
 		
-              <span class="comment">// 如果承接上文，父类没有成功加载的处理。</span>
-              <span class="keyword">if</span> (c == <span class="keyword">null</span>) &#123;
-                  <span class="keyword">long</span> t1 = System.nanoTime();
-                  <span class="comment">// 使用 findClass 去加载这个类。</span>
-                  <span class="comment">// findClass 的定义见下面分析</span>
-                  c = findClass(name);
+              <span class="token comment">// 如果承接上文，父类没有成功加载的处理。</span>
+              <span class="token keyword">if</span> <span class="token punctuation">(</span>c <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                  <span class="token keyword">long</span> t1 <span class="token operator">=</span> <span class="token class-name">System</span><span class="token punctuation">.</span><span class="token function">nanoTime</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                  <span class="token comment">// 使用 findClass 去加载这个类。</span>
+                  <span class="token comment">// findClass 的定义见下面分析</span>
+                  c <span class="token operator">=</span> <span class="token function">findClass</span><span class="token punctuation">(</span>name<span class="token punctuation">)</span><span class="token punctuation">;</span>
 
-                  <span class="comment">// this is the defining class loader; record the stats</span>
-                  sun.misc.PerfCounter.getParentDelegationTime().addTime(t1 - t0);
-                  sun.misc.PerfCounter.getFindClassTime().addElapsedTimeFrom(t1);
-                  sun.misc.PerfCounter.getFindClasses().increment();
-              &#125;
-          &#125;
-          <span class="keyword">if</span> (resolve) &#123;
-              resolveClass(c);
-          &#125;
-          <span class="keyword">return</span> c;
-      &#125;
-  &#125;</code></pre>
+                  <span class="token comment">// this is the defining class loader; record the stats</span>
+                  <span class="token class-name"><span class="token namespace">sun<span class="token punctuation">.</span>misc<span class="token punctuation">.</span></span>PerfCounter</span><span class="token punctuation">.</span><span class="token function">getParentDelegationTime</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">addTime</span><span class="token punctuation">(</span>t1 <span class="token operator">-</span> t0<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                  <span class="token class-name"><span class="token namespace">sun<span class="token punctuation">.</span>misc<span class="token punctuation">.</span></span>PerfCounter</span><span class="token punctuation">.</span><span class="token function">getFindClassTime</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">addElapsedTimeFrom</span><span class="token punctuation">(</span>t1<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                  <span class="token class-name"><span class="token namespace">sun<span class="token punctuation">.</span>misc<span class="token punctuation">.</span></span>PerfCounter</span><span class="token punctuation">.</span><span class="token function">getFindClasses</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">increment</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+              <span class="token punctuation">&#125;</span>
+          <span class="token punctuation">&#125;</span>
+          <span class="token keyword">if</span> <span class="token punctuation">(</span>resolve<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+              <span class="token function">resolveClass</span><span class="token punctuation">(</span>c<span class="token punctuation">)</span><span class="token punctuation">;</span>
+          <span class="token punctuation">&#125;</span>
+          <span class="token keyword">return</span> c<span class="token punctuation">;</span>
+      <span class="token punctuation">&#125;</span>
+  <span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h5 id="findClass-方法"><a href="#findClass-方法" class="headerlink" title="findClass 方法"></a>findClass 方法</h5><pre><code class="highlight java"><span class="keyword">protected</span> Class&lt;?&gt; findClass(String name) <span class="keyword">throws</span> ClassNotFoundException &#123;
-    <span class="keyword">throw</span> <span class="keyword">new</span> ClassNotFoundException(name);
-&#125;</code></pre>
+<h5 id="findClass-方法"><a href="#findClass-方法" class="headerlink" title="findClass 方法"></a>findClass 方法</h5><pre class="line-numbers language-java" data-language="java"><code class="language-java"><span class="token keyword">protected</span> <span class="token class-name">Class</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token operator">?</span><span class="token punctuation">></span></span> <span class="token function">findClass</span><span class="token punctuation">(</span><span class="token class-name">String</span> name<span class="token punctuation">)</span> <span class="token keyword">throws</span> <span class="token class-name">ClassNotFoundException</span> <span class="token punctuation">&#123;</span>
+    <span class="token keyword">throw</span> <span class="token keyword">new</span> <span class="token class-name">ClassNotFoundException</span><span class="token punctuation">(</span>name<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
 <p>这个方法，直接 <code>protected</code> ，摆明让实现类自己实现。那么类的加载逻辑也就走到最后一步了。</p>
 <p>如果委托父类没有成功，则自己处理，自己处理的逻辑，就写在 <code>findClass（）</code>中。这也是自定义类加载器为啥要重写 <code>findClass</code> 的原因。</p>
@@ -945,8 +945,8 @@ Class.forName(<span class="string">&quot;com.example.demo.Hello&quot;</span>,<sp
 
 
 <div class="copyright">
-  &copy; 
-  <span itemprop="copyrightYear">2021</span>
+  &copy; 2021 – 
+  <span itemprop="copyrightYear">2022</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
